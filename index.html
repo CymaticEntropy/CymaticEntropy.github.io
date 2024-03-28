@@ -30,7 +30,7 @@
         marker.getPopup().setContent(marker.getLatLng().toString()).openOn(map);
       });
 
-      //Ions
+      //Icons
       var icon_marshal = L.icon({
         iconUrl:       'icons/marshal.png',
         iconRetinaUrl: 'icons/marshal.png',
@@ -113,7 +113,7 @@
       var frgraves = L.marker([-2.613839, -8.217773], {icon: icon_graveyard}).bindPopup("Fort Riggs Graves");
       var sbgraves = L.marker([20.776659, -13.688965], {icon: icon_graveyard}).bindPopup("Strawberry Graves");
 
-      var campsitestemplate = L.marker([], {icon: icon_campsite}).bindPopup("");
+      var obwcamp01 = L.marker([-10.16356, 2.263184], {icon: icon_campsite}).bindPopup("BW Campsite #01");
 
       var manufacturingcamp = L.marker([4.477856, -5.756836], {icon: icon_interest}).bindPopup("Manufacturing Camp");
       var bmcumberlandfalls = L.marker([36.580247, 4.921875], {icon: icon_interest}).bindPopup("Cumberland Falls Market");
@@ -129,7 +129,7 @@
       var ingredients = L.layerGroup([blueberries,olives]);
       var reservations = L.layerGroup([wapiticamp,miskwacamp,blackknife,nanolitribe]);
       var graveyards = L.layerGroup([bwgraves,frgraves,sbgraves]);
-      var campsites = L.layerGroup([]);
+      var campsites = L.layerGroup([obwcamp01]);
       var interests = L.layerGroup([manufacturingcamp,bmcumberlandfalls,bmwallacestation,bmbardscrossing,bmtalltreesenclave,trainrobberyboy,travellingmerchant]);
       var development = L.layerGroup([marker]);
 
