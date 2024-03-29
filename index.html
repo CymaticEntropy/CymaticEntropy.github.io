@@ -11,7 +11,7 @@
   <body style="height: 100%; margin: 0;">
     <div id="map" style="width: 100%; height: 100%; background: #CFB88F;"></div>
     <script type="text/javascript">
-	
+
       //Creating the Map
       var map = L.map('map').setView([0, 0], 0);
       L.tileLayer('map/{z}/{x}/{y}.png', {
@@ -97,59 +97,91 @@
         shadowSize:  [41, 41]
       });
 
-
       // REST API
+      let mapData;
 
+      fetch('https://script.google.com/macros/s/AKfycbxsJaL8kVSB39CaUhGWIrNIkb536DbgStmDLdVJRrfyN9tK2OQYHNxD4MkHcPd9WQE/exec', {
+        headers: {
+          'Accept': 'application/json'
+        }
+      })
+      .then(response => response.json())
+      .then(data => {
+        mapData = data;
 
-      //Markers
-      var macfarlanes = L.marker([-42.988576, -33.596191], {icon: icon_marshal}).bindPopup("Fisher Homestead");
-      var bisonplains = L.marker([-23.684774, -2.592773], {icon: icon_marshal}).bindPopup("Bison Herd");
+        let i = mapData.data.length
+        let marshalarray = [];
+        let ingredientarray = [];
+        let reservationarray = [];
+        let graveyardarray = [];
+        let campsitearray = [];
+        let interestarray = [];
 
-      var blueberries = L.marker([41.52503, 37.397461], {icon: icon_ingredient}).bindPopup("Blueberries");
-      var olives = L.marker([-51.234407, -106.325684], {icon: icon_ingredient}).bindPopup("Olive Bush");
+        for (let v = 0; v < i; v++) {
+          let val = mapData.data[v];
+          let category = val.category;
+          let unique = val.uniqueIdentifier;
+          let xlocation = parseFloat(val.XLocation);
+          let ylocation = parseFloat(val.YLocation);
+          let name = val.markerName;
 
-      var wapiticamp = L.marker([70.27429, 56.99707], {icon: icon_reservation}).bindPopup("Wapiti Camp");
-      var miskwacamp = L.marker([45.614037, 7.558594], {icon: icon_reservation}).bindPopup("Miskwa Camp");
-      var blackknife = L.marker([-51.151786, -48.295898], {icon: icon_reservation}).bindPopup("Tuhnahuunʉʉ Camp");
-      var nanolitribe = L.marker([61.407236, 36.848145], {icon: icon_reservation}).bindPopup("Nanoli Camp");
+          switch (category) {
+            case "marshal":
+              L.marker([xlocation,ylocation], {icon: icon_marshal}).bindPopup(name).addTo(map);
+              marshalarray.push(unique);
+              break;
+            case "ingredient":
+              L.marker([xlocation,ylocation], {icon: icon_ingredient}).bindPopup(name).addTo(map);
+              ingredientarray.push(unique);
+              break;
+            case "reservation":
+              L.marker([xlocation,ylocation], {icon: icon_reservation}).bindPopup(name).addTo(map);
+              reservationarray.push(unique);
+              break;
+            case "graveyard":
+              L.marker([xlocation,ylocation], {icon: icon_graveyard}).bindPopup(name).addTo(map);
+              graveyardarray.push(unique);
+              break;
+            case "campsite":
+              L.marker([xlocation,ylocation], {icon: icon_campsite}).bindPopup(name).addTo(map);
+              campsitearray.push(unique);
+              break;
+            case "interest":
+              L.marker([xlocation,ylocation], {icon: icon_interest}).bindPopup(name).addTo(map);
+              interestarray.push(unique);
+              break;
+            default:
+              break;
+          }
+        }
 
-      var bwgraves = L.marker([-9.514079, 11.293945], {icon: icon_graveyard}).bindPopup("Blackwater Graves");
-      var frgraves = L.marker([-2.613839, -8.217773], {icon: icon_graveyard}).bindPopup("Fort Riggs Graves");
-      var sbgraves = L.marker([20.776659, -13.688965], {icon: icon_graveyard}).bindPopup("Strawberry Graves");
+        /*
 
-      var obwcamp01 = L.marker([-10.16356, 2.263184], {icon: icon_campsite}).bindPopup("BW Campsite #01");
+        // NEED TO ADD THE LATER TOGGLE-ABILITY LATER
 
-      var manufacturingcamp = L.marker([4.477856, -5.756836], {icon: icon_interest}).bindPopup("Manufacturing Camp");
-      var bmcumberlandfalls = L.marker([36.580247, 4.921875], {icon: icon_interest}).bindPopup("Cumberland Falls Market");
-      var bmwallacestation = L.marker([41.162114, -6.196289], {icon: icon_interest}).bindPopup("Wallace Station Market");
-      var bmbardscrossing = L.marker([4.67498, 14.765625], {icon: icon_interest}).bindPopup("Bard's Crossing Market");
-      var bmtalltreesenclave = L.marker([-3.623071, -34.760742], {icon: icon_interest}).bindPopup("Tall Trees Enclave Market");
-      var trainrobberyboy = L.marker([-44.00862, -10.327148], {icon: icon_interest}).bindPopup("Train Heist Boy");
-      var travellingmerchant = L.marker([37.474858, -16.259766], {icon: icon_interest}).bindPopup("Travelling Merchant");
-      
+        //Marker Groups
+        // var marshal = L.layerGroup([marshalarray]);
+        // var ingredient = L.layerGroup([ingredientarray]);
+        // var reservation = L.layerGroup([reservationarray]);
+        // var graveyard = L.layerGroup([graveyardarray]);
+        // var campsite = L.layerGroup([campsitearray]);
+        // var interest = L.layerGroup([interestarray]);
+        var development = L.layerGroup([marker]);
 
-      //Marker Groups
-      var marshal = L.layerGroup([macfarlanes,bisonplains]);
-      var ingredients = L.layerGroup([blueberries,olives]);
-      var reservations = L.layerGroup([wapiticamp,miskwacamp,blackknife,nanolitribe]);
-      var graveyards = L.layerGroup([bwgraves,frgraves,sbgraves]);
-      var campsites = L.layerGroup([obwcamp01]);
-      var interests = L.layerGroup([manufacturingcamp,bmcumberlandfalls,bmwallacestation,bmbardscrossing,bmtalltreesenclave,trainrobberyboy,travellingmerchant]);
-      var development = L.layerGroup([marker]);
+        //Marker Overlay
+        var overlays = {
+          "Marshal Patrol" : marshal,
+          "Ingredients" : ingredient,
+          "Reservations" : reservation,
+          "Graveyards" : graveyard,
+          "Campsites" : campsite,
+          "Interests" : interest,
+          "Map Dev" : development,
+        }
 
-      //Marker Overlay
-      var overlays = {
-        "Marshal Patrol" : marshal,
-        "Ingredients" : ingredients,
-        "Reservations" : reservations,
-        "Graveyards" : graveyards,
-        "Campsites" : campsites,
-        "Interests" : interests,
-        "Map Dev" : development,
-      }
-
-      //GROUP CONTROLS
-      L.control.layers(null, overlays).addTo(map);
+        //GROUP CONTROLS
+        L.control.layers(null, overlays).addTo(map);*/
+      });
     </script>
   </body>
 </html>
