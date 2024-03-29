@@ -1,0 +1,137 @@
+{
+    "mapdata": [
+      {
+        "category": "marshal",
+        "uniqueIdentifier": "macfarlanes",
+        "mapLocation": "-42.988576, -33.596191",
+        "markerName": "Fisher Homestead",
+        "valid": true
+      },
+      {
+        "category": "marshal",
+        "uniqueIdentifier": "bisonplains",
+        "mapLocation": "-23.684774, -2.592773",
+        "markerName": "Bison Herd",
+        "valid": true
+      },
+      {
+        "category": "ingredients",
+        "uniqueIdentifier": "blueberries",
+        "mapLocation": "41.52503, 37.397461",
+        "markerName": "Blueberries",
+        "valid": true
+      },
+      {
+        "category": "ingredients",
+        "uniqueIdentifier": "olives",
+        "mapLocation": "-51.234407, -106.325684",
+        "markerName": "Olive Bush",
+        "valid": true
+      },
+      {
+        "category": "reservations",
+        "uniqueIdentifier": "wapiticamp",
+        "mapLocation": "70.27429, 56.99707",
+        "markerName": "Wapiti Camp",
+        "valid": true
+      },
+      {
+        "category": "reservations",
+        "uniqueIdentifier": "miskwacamp",
+        "mapLocation": "45.614037, 7.558594",
+        "markerName": "Miskwa Camp",
+        "valid": true
+      },
+      {
+        "category": "reservations",
+        "uniqueIdentifier": "blackknife",
+        "mapLocation": "-51.151786, -48.295898",
+        "markerName": "Tuhnahuunʉʉ Camp",
+        "valid": true
+      },
+      {
+        "category": "reservations",
+        "uniqueIdentifier": "nanolitribe",
+        "mapLocation": "61.407236, 36.848145",
+        "markerName": "Nanoli Camp",
+        "valid": true
+      },
+      {
+        "category": "graveyards",
+        "uniqueIdentifier": "bwgraves",
+        "mapLocation": "-9.514079, 11.293945",
+        "markerName": "Blackwater Graves",
+        "valid": true
+      },
+      {
+        "category": "graveyards",
+        "uniqueIdentifier": "frgraves",
+        "mapLocation": "-2.613839, -8.217773",
+        "markerName": "Fort Riggs Graves",
+        "valid": true
+      },
+      {
+        "category": "graveyards",
+        "uniqueIdentifier": "sbgraves",
+        "mapLocation": "20.776659, -13.688965",
+        "markerName": "Strawberry Graves",
+        "valid": true
+      },
+      {
+        "category": "campsites",
+        "uniqueIdentifier": "obwcamp01",
+        "mapLocation": "-10.16356, 2.263184",
+        "markerName": "BW Campsite #01",
+        "valid": true
+      },
+      {
+        "category": "interests",
+        "uniqueIdentifier": "manufacturingcamp",
+        "mapLocation": "4.477856, -5.756836",
+        "markerName": "Manufacturing Camp",
+        "valid": true
+      },
+      {
+        "category": "interests",
+        "uniqueIdentifier": "bmcumberlandfalls",
+        "mapLocation": "36.580247, 4.921875",
+        "markerName": "Cumberland Falls Market",
+        "valid": true
+      },
+      {
+        "category": "interests",
+        "uniqueIdentifier": "bmwallacestation",
+        "mapLocation": "41.162114, -6.196289",
+        "markerName": "Wallace Station Market",
+        "valid": true
+      },
+      {
+        "category": "interests",
+        "uniqueIdentifier": "bmbardscrossing",
+        "mapLocation": "4.67498, 14.765625",
+        "markerName": "Bard's Crossing Market",
+        "valid": true
+      },
+      {
+        "category": "interests",
+        "uniqueIdentifier": "bmtalltreesenclave",
+        "mapLocation": "-3.623071, -34.760742",
+        "markerName": "Tall Trees Enclave Market",
+        "valid": true
+      },
+      {
+        "category": "interests",
+        "uniqueIdentifier": "trainrobberyboy",
+        "mapLocation": "-44.00862, -10.327148",
+        "markerName": "Train Heist Boy",
+        "valid": true
+      },
+      {
+        "category": "interests",
+        "uniqueIdentifier": "travellingmerchant",
+        "mapLocation": "37.474858, -16.259766",
+        "markerName": "Travelling Merchant",
+        "valid": true
+      }
+    ]
+  }
