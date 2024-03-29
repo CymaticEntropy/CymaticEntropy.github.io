@@ -3,7 +3,7 @@
   <head>
     <title>Bear Creek Law Map</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/x-icon" href="icons/law3.png">
+    <link rel="icon" type="image/x-icon" href="icons/law.png">
     <link rel="stylesheet" href="scripts/leaflet.css">
     <script src="scripts/leaflet.js"></script>
   </head>
@@ -96,7 +96,11 @@
         tooltipAnchor: [16, -28],
         shadowSize:  [41, 41]
       });
-  
+
+
+      // REST API
+
+
       //Markers
       var macfarlanes = L.marker([-42.988576, -33.596191], {icon: icon_marshal}).bindPopup("Fisher Homestead");
       var bisonplains = L.marker([-23.684774, -2.592773], {icon: icon_marshal}).bindPopup("Bison Herd");
