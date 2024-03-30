@@ -12,6 +12,9 @@
     <div id="map" style="width: 100%; height: 100%; background: #CFB88F;"></div>
     <script type="text/javascript">
 
+      let mapMarkerData;
+      let mapOverlayData;
+
       //Creating the Map
       var map = L.map('map').setView([0, 0], 0);
       L.tileLayer('map/{z}/{x}/{y}.png', {
@@ -97,9 +100,7 @@
         shadowSize:  [41, 41]
       });
 
-      // REST API
-      let mapData;
-
+      // Marker Points REST API
       fetch('https://script.google.com/macros/s/AKfycbyaz7qfgN_lcoSQwhp2SGpohErVbfyhjxgQTzX9JPNEHok81ruJ3sGJgVKnaj4UR1Q/exec', {
         headers: {
           'Accept': 'application/json'
@@ -107,9 +108,9 @@
       })
       .then(response => response.json())
       .then(data => {
-        mapData = data;
+        mapMarkerData = data;
 
-        let i = mapData.data.length
+        let i = mapMarkerData.data.length
         let marshalarray = [];
         let ingredientarray = [];
         let reservationarray = [];
@@ -118,7 +119,7 @@
         let interestarray = [];
 
         for (let v = 0; v < i; v++) {
-          let val = mapData.data[v];
+          let val = mapMarkerData.data[v];
           let category = val.category;
           let unique = val.uniqueIdentifier;
           let xlocation = parseFloat(val.XLocation);
@@ -127,27 +128,27 @@
 
           switch (category) {
             case "marshal":
-              L.marker([xlocation,ylocation], {icon: icon_marshal}).bindPopup(name).addTo(map);
+              L.marker([xlocation,ylocation], {icon: icon_marshal, title: name}).bindPopup(name).addTo(map);
               marshalarray.push(unique);
               break;
             case "ingredient":
-              L.marker([xlocation,ylocation], {icon: icon_ingredient}).bindPopup(name).addTo(map);
+              L.marker([xlocation,ylocation], {icon: icon_ingredient, title: name}).bindPopup(name).addTo(map);
               ingredientarray.push(unique);
               break;
             case "reservation":
-              L.marker([xlocation,ylocation], {icon: icon_reservation}).bindPopup(name).addTo(map);
+              L.marker([xlocation,ylocation], {icon: icon_reservation, title: name}).bindPopup(name).addTo(map);
               reservationarray.push(unique);
               break;
             case "graveyard":
-              L.marker([xlocation,ylocation], {icon: icon_graveyard}).bindPopup(name).addTo(map);
+              L.marker([xlocation,ylocation], {icon: icon_graveyard, title: name}).bindPopup(name).addTo(map);
               graveyardarray.push(unique);
               break;
             case "campsite":
-              L.marker([xlocation,ylocation], {icon: icon_campsite}).bindPopup(name).addTo(map);
+              L.marker([xlocation,ylocation], {icon: icon_campsite, title: name}).bindPopup(name).addTo(map);
               campsitearray.push(unique);
               break;
             case "interest":
-              L.marker([xlocation,ylocation], {icon: icon_interest}).bindPopup(name).addTo(map);
+              L.marker([xlocation,ylocation], {icon: icon_interest, title: name}).bindPopup(name).addTo(map);
               interestarray.push(unique);
               break;
             default:
