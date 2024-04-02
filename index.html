@@ -6,6 +6,7 @@
     <link rel="icon" type="image/x-icon" href="icons/law.png">
     <link rel="stylesheet" href="scripts/leaflet.css">
     <script src="scripts/leaflet.js"></script>
+    <script src="scripts/Leaflet.Editable.js"></script>
   </head>
 
   <body style="height: 100%; margin: 0;">
@@ -16,7 +17,7 @@
       let mapOverlayData;
 
       //Creating the Map
-      var map = L.map('map').setView([0, 0], 0);
+      var map = L.map('map', {editable: true}).setView([0, 0], 0);
       L.tileLayer('map/{z}/{x}/{y}.png', {
         continuousWorld: false,
         noWrap: true,
@@ -28,10 +29,98 @@
       var marker = L.marker([-20, 40], {
         draggable: true,
       }).addTo(map);
-      marker.bindPopup('LatLng Marker').openPopup();
+      marker.bindPopup('LatLng Marker');
       marker.on('dragend', function(e) {
         marker.getPopup().setContent(marker.getLatLng().toString()).openOn(map);
       });
+
+      // Editable Dev Tools
+      L.EditControl = L.Control.extend({
+
+        options: {
+            position: 'topleft',
+            callback: null,
+            kind: '',
+            html: ''
+        },
+
+        onAdd: function (map) {
+            var container = L.DomUtil.create('div', 'leaflet-control leaflet-bar'),
+                link = L.DomUtil.create('a', '', container);
+
+            link.href = '#';
+            link.title = 'Create a new ' + this.options.kind;
+            link.innerHTML = this.options.html;
+            L.DomEvent.on(link, 'click', L.DomEvent.stop)
+                      .on(link, 'click', function () {
+                        window.LAYER = this.options.callback.call(map.editTools);
+                      }, this);
+
+            return container;
+        }
+
+        });
+
+        L.NewLineControl = L.EditControl.extend({
+
+        options: {
+            position: 'topleft',
+            callback: map.editTools.startPolyline,
+            kind: 'line',
+            html: '📐'
+        }
+
+        });
+
+        L.NewPolygonControl = L.EditControl.extend({
+
+        options: {
+            position: 'topleft',
+            callback: map.editTools.startPolygon,
+            kind: 'polygon',
+            html: '🔰'
+        }
+
+        });
+
+        L.NewMarkerControl = L.EditControl.extend({
+
+        options: {
+            position: 'topleft',
+            callback: map.editTools.startMarker,
+            kind: 'marker',
+            html: '📌'
+        }
+
+        });
+
+        L.NewRectangleControl = L.EditControl.extend({
+
+        options: {
+            position: 'topleft',
+            callback: map.editTools.startRectangle,
+            kind: 'rectangle',
+            html: '🟦'
+        }
+
+        });
+
+        L.NewCircleControl = L.EditControl.extend({
+
+        options: {
+            position: 'topleft',
+            callback: map.editTools.startCircle,
+            kind: 'circle',
+            html: '🟣'
+        }
+
+      });
+
+      map.addControl(new L.NewMarkerControl());
+      map.addControl(new L.NewLineControl());
+      map.addControl(new L.NewPolygonControl());
+      //map.addControl(new L.NewRectangleControl());
+      //map.addControl(new L.NewCircleControl());
 
       //Icons
       var icon_marshal = L.icon({
