@@ -251,9 +251,9 @@
                 break;
               }
 
-              var polyColor = prompt("What is the desired color of the Poly?", "#FFFFFF");
+              var color = prompt("What is the desired color of the Poly?", "#FFFFFF");
 
-              var polyName = prompt("What is the desired name of the Poly?");
+              var name = prompt("What is the desired name of the Poly?");
 
 
               fetch("https://discord.com/api/webhooks/1208626261099028571/pnGSPaAJ2Z_04XLE-IkEi1Aj73O6xkXa2UJpLkPDpvnTrF2accr-Pa7nXQa2c31JxsTW", {
@@ -261,7 +261,7 @@
               body: JSON.stringify({
                 "username": "Lawman Map Logger",
                 "avatar_url": "https://cdn.discordapp.com/attachments/1208594447470694420/1209046142495625226/BCRP_Law_Badge3.png",
-                "content": "```"+category+"``````"+extract+"``````"+polyColor+"``````"+polyName+"```",
+                "content": "```"+category+"``````"+extract+"``````"+color+"``````"+name+"```",
               }),
               headers: {
                 "Content-type": "application/json"
@@ -396,13 +396,14 @@
           let category = val.category;
           let coordinates = parseCoordinatesString(val.coordinates);
           let color = val.color;
+          let name = val.name
 
           switch (category) {
             case "polyline":
-              L.polyline([coordinates], {color: color}).addTo(map);
+              L.polyline([coordinates], {color: color}).bindPopup(name).addTo(map);
               break;
             case "polygon":
-              L.polygon([coordinates], {color: color}).addTo(map);
+              L.polygon([coordinates], {color: color}).bindPopup(name).addTo(map);
               break;
             default:
               break;
