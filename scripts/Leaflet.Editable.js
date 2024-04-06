@@ -875,6 +875,7 @@
             // 🍂event editable:drawing:commit: Event
             // Fired when user finish drawing a feature.
             this.fireAndForward('editable:drawing:commit', e);
+            this.fireAndForward('cymatic:drawing:commit', e); // CUSTOM EVENT
         },
 
         onDrawingMouseDown: function (e) {
@@ -1140,6 +1141,7 @@
             // 🍂event editable:vertex:ctrlclick: VertexEvent
             // Fired when a `click` with `ctrlKey` is issued on a vertex.
             this.fireAndForward('editable:vertex:ctrlclick', e);
+            this.fireAndForward('cymatic:drawing:commit', e); // CUSTOM EVENT
         },
 
         onVertexMarkerShiftClick: function (e) {
