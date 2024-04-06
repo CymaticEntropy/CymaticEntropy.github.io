@@ -144,6 +144,12 @@
         return coordinates;
       }
 
+      function isValidHexColor(color) {
+        // Regular expression to match a valid hex color code
+        const hexRegex = /^#[0-9A-Fa-f]{6}$/;
+        return hexRegex.test(color);
+      }
+
       map.on('cymatic:drawing:commit', ({ layer }) => {
 
         setTimeout(function(){
@@ -222,39 +228,32 @@
           } else if (layer instanceof L.Polyline) {
             let coords = layer.getLatLngs();
             let extract = extractCoordinates(coords);
+            let category;
 
             var satisfied = confirm("Are you satisfied with the points of the Poly?");
             if (satisfied == true) {
 
-              while (true) {
-                var category = prompt("Please select the Poly Category: polyline: or; polygon");
-
-                if (category === null) {
-                  var reconfirm = confirm("Are you sure you wish to cancel?");
-                  if (reconfirm == true) {
+              if (layer instanceof L.Polygon) {
+                category = "polygon";
+              } else if (layer instanceof L.Polyline) {
+                category = "polyline";
+              } else {
+                var reconfirm = confirm("Are you sure you wish to cancel?");
+                if (reconfirm) {
                     alert("Alright! You have cancelled.");
                     map.removeLayer(layer);
-                  } else {
-                    continue;
-                  }
                 }
-
-                switch(category.toLowerCase()) {
-                  case "polyline":
-                    break;
-                  case "polygon":
-                    break;
-                  default:
-                    alert("You need to select a category from the list.");
-                    continue;
-                }
-                break;
               }
 
-              var color = prompt("What is the desired color of the Poly?", "#FFFFFF");
+              let color;
+              do {
+                color = prompt("What is the desired color of the Poly?", "#FFFFFF");
+                if (color === null) {
+                    color = "#FFFFFF"; // Default value if prompt returns null
+                }
+              } while (!isValidHexColor(color));
 
               var name = prompt("What is the desired name of the Poly?");
-
 
               fetch("https://discord.com/api/webhooks/1208626261099028571/pnGSPaAJ2Z_04XLE-IkEi1Aj73O6xkXa2UJpLkPDpvnTrF2accr-Pa7nXQa2c31JxsTW", {
               method: "POST",
