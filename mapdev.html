@@ -167,9 +167,6 @@
               ysplit = parseFloat(match[2]);
             }
 
-            console.log(xsplit)
-            console.log(ysplit)
-
             var satisfied = confirm("Are you satisfied with the location of the marker?");
             if (satisfied == true) {
 
@@ -206,14 +203,30 @@
                 break;
               }
 
-              var markerName = prompt("What is the name of the Marker?");
+              var name = prompt("What is the name of the Marker?");
+
+              
+
+              fetch("https://script.google.com/macros/s/AKfycbzYAupIsPJk1wvwvgvPfdziyUqwF8uatVb_wPlREmHJm6Z9uBwpbYIMYGY-sMys3is/exec", {
+                method: "POST",
+                body: JSON.stringify({
+                  "type": "pins",
+                  "category": category,
+                  "xcoord": xsplit,
+                  "ycoord": ysplit,
+                  "name": name,
+                }),
+                headers: {
+                  "Content-type": "application/json"
+                }
+              });
 
               fetch("https://discord.com/api/webhooks/1208626261099028571/pnGSPaAJ2Z_04XLE-IkEi1Aj73O6xkXa2UJpLkPDpvnTrF2accr-Pa7nXQa2c31JxsTW", {
                 method: "POST",
                 body: JSON.stringify({
                   "username": "Lawman Map Logger",
                   "avatar_url": "https://cdn.discordapp.com/attachments/1208594447470694420/1209046142495625226/BCRP_Law_Badge3.png",
-                  "content": "New Marker:```"+markerName+"``````"+category+"``````"+xsplit+"``````"+ysplit+"```",
+                  "content": "```"+name+"``````"+category+"``````"+xsplit+"``````"+ysplit+"```",
                 }),
                 headers: {
                   "Content-type": "application/json"
@@ -247,13 +260,33 @@
 
               let color;
               do {
-                color = prompt("What is the desired color of the Poly?", "#FFFFFF");
+                color = prompt("What is the desired color of the Poly?");
                 if (color === null) {
                     color = "#FFFFFF"; // Default value if prompt returns null
                 }
               } while (!isValidHexColor(color));
 
               var name = prompt("What is the desired name of the Poly?");
+
+              fetch(/*"https://proxy.cors.sh/*/"https://script.google.com/macros/s/AKfycbzYAupIsPJk1wvwvgvPfdziyUqwF8uatVb_wPlREmHJm6Z9uBwpbYIMYGY-sMys3is/exec", {
+                method: "POST",
+                body: JSON.stringify({
+                  "type": "poly",
+                  "category": category,
+                  "coords": extract,
+                  "color": color,
+                  "name": name,
+                }),
+                headers: {
+                  "Content-type": "application/json",
+                  //'x-cors-api-key': 'temp_74fdde3a7797a48880a31efaf64a4729'
+                }
+              }).then(response => {
+                console.log(response)
+              })
+              .catch(error => {
+                console.error(error);
+              });
 
               fetch("https://discord.com/api/webhooks/1208626261099028571/pnGSPaAJ2Z_04XLE-IkEi1Aj73O6xkXa2UJpLkPDpvnTrF2accr-Pa7nXQa2c31JxsTW", {
               method: "POST",
@@ -345,7 +378,7 @@
 
 
       //RESTful API
-      fetch('https://script.google.com/macros/s/AKfycby3iZWHyR_nlo1khnUqkfCMExGjA1P2xU81xsn977RJWAPFOMjvP12JFdJ_AmcrJkA/exec', {//'https://script.google.com/macros/s/AKfycbyaz7qfgN_lcoSQwhp2SGpohErVbfyhjxgQTzX9JPNEHok81ruJ3sGJgVKnaj4UR1Q/exec'
+      fetch("https://script.google.com/macros/s/AKfycbzYAupIsPJk1wvwvgvPfdziyUqwF8uatVb_wPlREmHJm6Z9uBwpbYIMYGY-sMys3is/exec", {
         headers: {
           'Accept': 'application/json'
         }
