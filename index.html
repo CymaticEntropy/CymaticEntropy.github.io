@@ -13,8 +13,10 @@
     <div id="map" style="width: 100%; height: 100%; background: #CFB88F;"></div>
     <script type="text/javascript">
 
-      let mapMarkerData;
-      let mapOverlayData;
+      let webhookURL = "https://discord.com/api/webhooks/1208626261099028571/pnGSPaAJ2Z_04XLE-IkEi1Aj73O6xkXa2UJpLkPDpvnTrF2accr-Pa7nXQa2c31JxsTW";
+      let restfulURL = "https://script.google.com/macros/s/AKfycbx8o1l0B9b9rxxrT-oD8gH8BRPZCsyQPZvqeK6p2wIhutiQj61xWGK6CV2s6Y14AQI/exec";
+      let mapPinsData;
+      let mapPolyData;  
 
       //Creating the Map
       var map = L.map('map', {editable: true}).setView([0, 0], 0);
@@ -25,16 +27,8 @@
         maxZoom: 6,
       }).addTo(map);
 
-      //Coordinate Finder
-      var marker = L.marker([-20, 40], {
-        draggable: true,
-      }).addTo(map);
-      marker.bindPopup('LatLng Marker');
-      marker.on('dragend', function(e) {
-        marker.getPopup().setContent(marker.getLatLng().toString()).openOn(map);
-      });
 
-      // Editable Dev Tools
+      //Draw API
       L.EditControl = L.Control.extend({
 
         options: {
@@ -45,18 +39,17 @@
         },
 
         onAdd: function (map) {
-            var container = L.DomUtil.create('div', 'leaflet-control leaflet-bar'),
-                link = L.DomUtil.create('a', '', container);
+          var container = L.DomUtil.create('div', 'leaflet-control leaflet-bar'),
+          link = L.DomUtil.create('a', '', container);
 
-            link.href = '#';
-            link.title = 'Create a new ' + this.options.kind;
-            link.innerHTML = this.options.html;
-            L.DomEvent.on(link, 'click', L.DomEvent.stop)
-                      .on(link, 'click', function () {
-                        window.LAYER = this.options.callback.call(map.editTools);
-                      }, this);
-
-            return container;
+          link.href = '#';
+          link.title = 'Create new ' + this.options.kind;
+          link.innerHTML = this.options.html;
+          L.DomEvent.on(link, 'click', L.DomEvent.stop)
+                    .on(link, 'click', function () {
+                      window.LAYER = this.options.callback.call(map.editTools);
+                    }, this);
+          return container;
         }
 
         });
@@ -66,7 +59,7 @@
         options: {
             position: 'topleft',
             callback: map.editTools.startPolyline,
-            kind: 'line',
+            kind: 'Polyline',
             html: '📐'
         }
 
@@ -77,7 +70,7 @@
         options: {
             position: 'topleft',
             callback: map.editTools.startPolygon,
-            kind: 'polygon',
+            kind: 'Polygon',
             html: '🔰'
         }
 
@@ -88,7 +81,7 @@
         options: {
             position: 'topleft',
             callback: map.editTools.startMarker,
-            kind: 'marker',
+            kind: 'Marker',
             html: '📌'
         }
 
@@ -99,7 +92,7 @@
         options: {
             position: 'topleft',
             callback: map.editTools.startRectangle,
-            kind: 'rectangle',
+            kind: 'Rectangle',
             html: '🟦'
         }
 
@@ -110,7 +103,7 @@
         options: {
             position: 'topleft',
             callback: map.editTools.startCircle,
-            kind: 'circle',
+            kind: 'Circle',
             html: '🟣'
         }
 
@@ -121,6 +114,166 @@
       map.addControl(new L.NewPolygonControl());
       //map.addControl(new L.NewRectangleControl());
       //map.addControl(new L.NewCircleControl());
+
+      function extractCoordinates(input) {
+        const regex = /LatLng\((-?\d+\.\d+), (-?\d+\.\d+)\)/g;
+        let coordinates = [];
+        let match;
+        
+        while ((match = regex.exec(input)) !== null) {
+            coordinates.push([parseFloat(match[1]), parseFloat(match[2])]);
+        }
+        
+        return coordinates.map(coord => `[${coord.join(",")}]`).join(",");
+      }
+
+      function parseCoordinatesString(coordinatesString) {
+        // Removing leading and trailing brackets, if any
+        coordinatesString = coordinatesString.replace(/^\[|\]$/g, '');
+
+        // Splitting the string into pairs of coordinates
+        const pairs = coordinatesString.split('],[');
+
+        // Initialize an array to hold the coordinates
+        const coordinates = [];
+
+        // Extracting coordinates from pairs and pushing them to the coordinates array
+        pairs.forEach(pair => {
+            const [lat, lng] = pair.split(',').map(Number);
+            coordinates.push([lat, lng]);
+        });
+
+        return coordinates;
+      }
+
+      function isValidHexColor(color) {
+        // Regular expression to match a valid hex color code
+        const hexRegex = /^#[0-9A-Fa-f]{6}$/;
+        return hexRegex.test(color);
+      }
+
+      map.on('cymatic:drawing:commit', ({ layer }) => {
+
+        setTimeout(function(){
+        
+          if (layer instanceof L.Marker) {
+            let coords = layer.getLatLng();
+            let xsplit;
+            let ysplit;
+
+            const regex = /LatLng\((-?\d+\.\d+), (-?\d+\.\d+)\)/g;
+            let match;
+            
+            while ((match = regex.exec(coords)) !== null) {
+              xsplit = parseFloat(match[1]);
+              ysplit = parseFloat(match[2]);
+            }
+
+            var satisfied = confirm("Are you satisfied with the location of the marker?");
+            if (satisfied == true) {
+
+              while (true) {
+                var category = prompt("Please select the Marker Category: marshal; ingredient; reservation; graveyard; campsite: or; interest");
+
+                if (category === null) {
+                  var reconfirm = confirm("Are you sure you wish to cancel?");
+                  if (reconfirm == true) {
+                    alert("Alright! You have cancelled.");
+                    map.removeLayer(layer);
+                  } else {
+                    continue;
+                  }
+                }
+
+                switch(category.toLowerCase()) {
+                  case "marshal":
+                    break;
+                  case "ingredient":
+                    break;
+                  case "reservation":
+                    break;
+                  case "graveyard":
+                    break;
+                  case "campsite":
+                    break;
+                  case "interest":
+                    break;
+                  default:
+                    alert("You need to select a category from the list.");
+                    continue;
+                }
+                break;
+              }
+
+              var name = prompt("What is the name of the Marker?");
+
+              fetch(webhookURL, {
+                method: "POST",
+                body: JSON.stringify({
+                  "username": "Lawman Map Logger",
+                  "avatar_url": "https://cdn.discordapp.com/attachments/1208594447470694420/1209046142495625226/BCRP_Law_Badge3.png",
+                  "content": "```"+name+"``````"+category+"``````"+xsplit+"``````"+ysplit+"```",
+                }),
+                headers: {
+                  "Content-type": "application/json"
+                }
+              });
+
+              setTimeout(function(){location.reload()}, 1000);
+            } else {
+              alert("Alright! You may try again.");
+              map.removeLayer(layer);
+            }
+          } else if (layer instanceof L.Polyline) {
+            let coords = layer.getLatLngs();
+            let extract = extractCoordinates(coords);
+            let category;
+
+            var satisfied = confirm("Are you satisfied with the points of the Poly?");
+            if (satisfied == true) {
+
+              if (layer instanceof L.Polygon) {
+                category = "polygon";
+              } else if (layer instanceof L.Polyline) {
+                category = "polyline";
+              } else {
+                var reconfirm = confirm("Are you sure you wish to cancel?");
+                if (reconfirm) {
+                    alert("Alright! You have cancelled.");
+                    map.removeLayer(layer);
+                }
+              }
+
+              let color;
+              do {
+                color = prompt("What is the desired color of the Poly?");
+                if (color === null) {
+                    color = "#FFFFFF"; // Default value if prompt returns null
+                }
+              } while (!isValidHexColor(color));
+
+              var name = prompt("What is the desired name of the Poly?");
+
+              fetch(webhookURL, {
+              method: "POST",
+              body: JSON.stringify({
+                "username": "Lawman Map Logger",
+                "avatar_url": "https://cdn.discordapp.com/attachments/1208594447470694420/1209046142495625226/BCRP_Law_Badge3.png",
+                "content": "```"+category+"``````"+extract+"``````"+color+"``````"+name+"```",
+              }),
+              headers: {
+                "Content-type": "application/json"
+              }
+              });
+
+              setTimeout(function(){location.reload()}, 1000);
+            } else {
+              alert("Alright! You may continue editing.");
+            }
+          }
+        }, 500);
+      });
+
 
       //Icons
       var icon_marshal = L.icon({
@@ -189,88 +342,71 @@
         shadowSize:  [41, 41]
       });
 
-      // Marker Points REST API
-      fetch('https://script.google.com/macros/s/AKfycbyaz7qfgN_lcoSQwhp2SGpohErVbfyhjxgQTzX9JPNEHok81ruJ3sGJgVKnaj4UR1Q/exec', {
+
+      //RESTful API
+      fetch(restfulURL, {
         headers: {
           'Accept': 'application/json'
         }
       })
       .then(response => response.json())
       .then(data => {
-        mapMarkerData = data;
+        mapPinsData = data.pinsdata;
+        mapPolyData = data.polydata;
 
-        let i = mapMarkerData.data.length
-        let marshalarray = [];
-        let ingredientarray = [];
-        let reservationarray = [];
-        let graveyardarray = [];
-        let campsitearray = [];
-        let interestarray = [];
+        let i = mapPinsData.length;
 
         for (let v = 0; v < i; v++) {
-          let val = mapMarkerData.data[v];
+          let val = mapPinsData[v];
           let category = val.category;
-          let unique = val.uniqueIdentifier;
-          let xlocation = parseFloat(val.XLocation);
-          let ylocation = parseFloat(val.YLocation);
-          let name = val.markerName;
+          let xCoordinate = val.xCoordinate;
+          let yCoordinate = val.yCoordinate;
+          let name = val.name;
 
           switch (category) {
             case "marshal":
-              L.marker([xlocation,ylocation], {icon: icon_marshal, title: name}).bindPopup(name).addTo(map);
-              marshalarray.push(unique);
+              L.marker([xCoordinate,yCoordinate], {icon: icon_marshal, title: name}).bindPopup(name).addTo(map);
               break;
             case "ingredient":
-              L.marker([xlocation,ylocation], {icon: icon_ingredient, title: name}).bindPopup(name).addTo(map);
-              ingredientarray.push(unique);
+              L.marker([xCoordinate,yCoordinate], {icon: icon_ingredient, title: name}).bindPopup(name).addTo(map);
               break;
             case "reservation":
-              L.marker([xlocation,ylocation], {icon: icon_reservation, title: name}).bindPopup(name).addTo(map);
-              reservationarray.push(unique);
+              L.marker([xCoordinate,yCoordinate], {icon: icon_reservation, title: name}).bindPopup(name).addTo(map);
               break;
             case "graveyard":
-              L.marker([xlocation,ylocation], {icon: icon_graveyard, title: name}).bindPopup(name).addTo(map);
-              graveyardarray.push(unique);
+              L.marker([xCoordinate,yCoordinate], {icon: icon_graveyard, title: name}).bindPopup(name).addTo(map);
               break;
             case "campsite":
-              L.marker([xlocation,ylocation], {icon: icon_campsite, title: name}).bindPopup(name).addTo(map);
-              campsitearray.push(unique);
+              L.marker([xCoordinate,yCoordinate], {icon: icon_campsite, title: name}).bindPopup(name).addTo(map);
               break;
             case "interest":
-              L.marker([xlocation,ylocation], {icon: icon_interest, title: name}).bindPopup(name).addTo(map);
-              interestarray.push(unique);
+              L.marker([xCoordinate,yCoordinate], {icon: icon_interest, title: name}).bindPopup(name).addTo(map);
+              break;
+            default:
+              break;
+          }
+        };
+
+        let j = mapPolyData.length
+
+        for (let v = 0; v < j; v++) {
+          let val = mapPolyData[v];
+          let category = val.category;
+          let coordinates = parseCoordinatesString(val.coordinates);
+          let color = val.color;
+          let name = val.name
+
+          switch (category) {
+            case "polyline":
+              L.polyline([coordinates], {color: color}).bindPopup(name).addTo(map);
+              break;
+            case "polygon":
+              L.polygon([coordinates], {color: color}).bindPopup(name).addTo(map);
               break;
             default:
               break;
           }
         }
-
-        /*
-
-        // NEED TO ADD THE LATER TOGGLE-ABILITY LATER
-
-        //Marker Groups
-        // var marshal = L.layerGroup([marshalarray]);
-        // var ingredient = L.layerGroup([ingredientarray]);
-        // var reservation = L.layerGroup([reservationarray]);
-        // var graveyard = L.layerGroup([graveyardarray]);
-        // var campsite = L.layerGroup([campsitearray]);
-        // var interest = L.layerGroup([interestarray]);
-        var development = L.layerGroup([marker]);
-
-        //Marker Overlay
-        var overlays = {
-          "Marshal Patrol" : marshal,
-          "Ingredients" : ingredient,
-          "Reservations" : reservation,
-          "Graveyards" : graveyard,
-          "Campsites" : campsite,
-          "Interests" : interest,
-          "Map Dev" : development,
-        }
-
-        //GROUP CONTROLS
-        L.control.layers(null, overlays).addTo(map);*/
       });
     </script>
   </body>
