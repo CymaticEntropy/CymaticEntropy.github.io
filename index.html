@@ -382,22 +382,22 @@
               L.marker([0,0], {icon: icon_devErrFix}).addTo(map);
               break;
             case "marshal":
-              L.marker([xCoordinate,yCoordinate], {icon: icon_marshal, title: name}).bindPopup("<h1>"+name+"</h1><img src = '"+image+"' style='width:512px;height:256px'>").addTo(map);
+              L.marker([xCoordinate,yCoordinate], {icon: icon_marshal, title: name}).bindPopup("<h1>"+name+"</h1><img src = '"+image+"' style='width:256px;height:256px'>").addTo(map);
               break;
             case "ingredient":
-              L.marker([xCoordinate,yCoordinate], {icon: icon_ingredient, title: name}).bindPopup("<h1>"+name+"</h1><img src = '"+image+"' style='width:512px;height:256px'>").addTo(map);
+              L.marker([xCoordinate,yCoordinate], {icon: icon_ingredient, title: name}).bindPopup("<h1>"+name+"</h1><img src = '"+image+"' style='width:256px;height:256px'>").addTo(map);
               break;
             case "reservation":
-              L.marker([xCoordinate,yCoordinate], {icon: icon_reservation, title: name}).bindPopup("<h1>"+name+"</h1><img src = '"+image+"' style='width:512px;height:256px'>").addTo(map);
+              L.marker([xCoordinate,yCoordinate], {icon: icon_reservation, title: name}).bindPopup("<h1>"+name+"</h1><img src = '"+image+"' style='width:256px;height:256px'>").addTo(map);
               break;
             case "graveyard":
-              L.marker([xCoordinate,yCoordinate], {icon: icon_graveyard, title: name}).bindPopup("<h1>"+name+"</h1><img src = '"+image+"' style='width:512px;height:256px'>").addTo(map);
+              L.marker([xCoordinate,yCoordinate], {icon: icon_graveyard, title: name}).bindPopup("<h1>"+name+"</h1><img src = '"+image+"' style='width:256px;height:256px'>").addTo(map);
               break;
             case "campsite":
-              L.marker([xCoordinate,yCoordinate], {icon: icon_campsite, title: name}).bindPopup("<h1>"+name+"</h1><img src = '"+image+"' style='width:512px;height:256px'>").addTo(map);
+              L.marker([xCoordinate,yCoordinate], {icon: icon_campsite, title: name}).bindPopup("<h1>"+name+"</h1><img src = '"+image+"' style='width:256px;height:256px'>").addTo(map);
               break;
             case "interest":
-              L.marker([xCoordinate,yCoordinate], {icon: icon_interest, title: name}).bindPopup("<h1>"+name+"</h1><img src = '"+image+"' style='width:512px;height:256px'>").addTo(map);
+              L.marker([xCoordinate,yCoordinate], {icon: icon_interest, title: name}).bindPopup("<h1>"+name+"</h1><img src = '"+image+"' style='width:256px;height:256px'>").addTo(map);
               break;
             default:
               break;
@@ -426,10 +426,10 @@
               L.marker([0,0], {icon: icon_devErrFix}).addTo(map);
               break;
             case "polyline":
-              L.polyline([coordinates], {color: color}).bindPopup("<h1>"+name+"</h1><img src = '"+image+"' style='width:512px;height:256px'>").addTo(map);
+              L.polyline([coordinates], {color: color}).bindPopup("<h1>"+name+"</h1><img src = '"+image+"' style='width:256px;height:256px'>").addTo(map);
               break;
             case "polygon":
-              L.polygon([coordinates], {color: color}).bindPopup("<h1>"+name+"</h1><img src = '"+image+"' style='width:512px;height:256px'>").addTo(map);
+              L.polygon([coordinates], {color: color}).bindPopup("<h1>"+name+"</h1><img src = '"+image+"' style='width:256px;height:256px'>").addTo(map);
               break;
             default:
               break;
