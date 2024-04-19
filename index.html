@@ -211,9 +211,45 @@
               fetch(webhookURL, {
                 method: "POST",
                 body: JSON.stringify({
+                  "content": "**[Lawman Map Database](https://docs.google.com/spreadsheets/d/1hSlpoyo-G6FYitZDfcw4JPRG85MVNjDW5i-qX9TlVds/edit)**",
+                  "embeds": [
+                    {
+                      "color": 14203281,
+                      "fields": [
+                        {
+                          "name": "Cateogry",
+                          "value": "```"+category+"```",
+                          "inline": true
+                        },
+                        {
+                          "name": "X Coordinate",
+                          "value": "```"+xsplit+"```",
+                          "inline": true
+                        },
+                        {
+                          "name": "Y Coordinate",
+                          "value": "```"+ysplit+"```",
+                          "inline": true
+                        },
+                        {
+                          "name": "Marker Name",
+                          "value": "```"+name+"```",
+                          "inline": false
+                        },
+                        {
+                          "name": "Display Image",
+                          "value": "```"+image+"```",
+                          "inline": false
+                        }
+                      ],
+                      "footer": {
+                        "text": "Developed by CymaticEntropy"
+                      }
+                    }
+                  ],
                   "username": "Lawman Map Logger",
-                  "avatar_url": "https://cdn.discordapp.com/attachments/1208594447470694420/1209046142495625226/BCRP_Law_Badge3.png",
-                  "content": "```"+category+"``````"+xsplit+"``````"+ysplit+"``````"+name+"``````"+image+"```",
+                  "avatar_url": "https://cdn.discordapp.com/attachments/1208594447470694420/1209046142495625226/BCRP_Law_Badge3.png?ex=66261877&is=6613a377&hm=1441c249b9922fd6e12ba2cee0772a7af194688184f2a1baf2f2d6efe2e91c53&",
+                  "attachments": []
                 }),
                 headers: {
                   "Content-type": "application/json"
@@ -259,9 +295,42 @@
               fetch(webhookURL, {
               method: "POST",
               body: JSON.stringify({
+                "content": "**[Lawman Map Database](https://docs.google.com/spreadsheets/d/1hSlpoyo-G6FYitZDfcw4JPRG85MVNjDW5i-qX9TlVds/edit)**",
+                "embeds": [
+                  {
+                    "title": "Coordinates",
+                    "description": "```"+extract+"```",
+                    "color": 14203281,
+                    "fields": [
+                      {
+                        "name": "Category Type",
+                        "value": "```"+category+"```",
+                        "inline": true
+                      },
+                      {
+                        "name": "Hex Color",
+                        "value": "```"+color+"```",
+                        "inline": true
+                      },
+                      {
+                        "name": "Poly Name",
+                        "value": "```"+name+"```",
+                        "inline": true
+                      },
+                      {
+                        "name": "Display Image",
+                        "value": "```"+image+"```",
+                        "inline": false
+                      }
+                    ],
+                    "footer": {
+                      "text": "Developed by CymaticEntropy"
+                    }
+                  }
+                ],
                 "username": "Lawman Map Logger",
-                "avatar_url": "https://cdn.discordapp.com/attachments/1208594447470694420/1209046142495625226/BCRP_Law_Badge3.png",
-                "content": "```"+category+"``````"+extract+"``````"+color+"``````"+name+"``````"+image+"```",
+                "avatar_url": "https://cdn.discordapp.com/attachments/1208594447470694420/1209046142495625226/BCRP_Law_Badge3.png?ex=66261877&is=6613a377&hm=1441c249b9922fd6e12ba2cee0772a7af194688184f2a1baf2f2d6efe2e91c53&",
+                "attachments": []
               }),
               headers: {
                 "Content-type": "application/json"
@@ -377,30 +446,32 @@
           let name = val.name;
           let image = val.image;
 
-          switch (category) {
-            case "devErrFix":
-              L.marker([0,0], {icon: icon_devErrFix}).addTo(map);
-              break;
-            case "marshal":
-              L.marker([xCoordinate,yCoordinate], {icon: icon_marshal, title: name}).bindPopup("<h1>"+name+"</h1><img src = '"+image+"' style='width:256px;height:256px'>").addTo(map);
-              break;
-            case "ingredient":
-              L.marker([xCoordinate,yCoordinate], {icon: icon_ingredient, title: name}).bindPopup("<h1>"+name+"</h1><img src = '"+image+"' style='width:256px;height:256px'>").addTo(map);
-              break;
-            case "reservation":
-              L.marker([xCoordinate,yCoordinate], {icon: icon_reservation, title: name}).bindPopup("<h1>"+name+"</h1><img src = '"+image+"' style='width:256px;height:256px'>").addTo(map);
-              break;
-            case "graveyard":
-              L.marker([xCoordinate,yCoordinate], {icon: icon_graveyard, title: name}).bindPopup("<h1>"+name+"</h1><img src = '"+image+"' style='width:256px;height:256px'>").addTo(map);
-              break;
-            case "campsite":
-              L.marker([xCoordinate,yCoordinate], {icon: icon_campsite, title: name}).bindPopup("<h1>"+name+"</h1><img src = '"+image+"' style='width:256px;height:256px'>").addTo(map);
-              break;
-            case "interest":
-              L.marker([xCoordinate,yCoordinate], {icon: icon_interest, title: name}).bindPopup("<h1>"+name+"</h1><img src = '"+image+"' style='width:256px;height:256px'>").addTo(map);
-              break;
-            default:
-              break;
+          if (val.valid == true) {
+            switch (category) {
+              case "devErrFix":
+                L.marker([0,0], {icon: icon_devErrFix}).addTo(map);
+                break;
+              case "marshal":
+                L.marker([xCoordinate,yCoordinate], {icon: icon_marshal, title: name}).bindPopup("<h1>"+name+"</h1><img src = '"+image+"' style='width:256px;height:256px'>").addTo(map);
+                break;
+              case "ingredient":
+                L.marker([xCoordinate,yCoordinate], {icon: icon_ingredient, title: name}).bindPopup("<h1>"+name+"</h1><img src = '"+image+"' style='width:256px;height:256px'>").addTo(map);
+                break;
+              case "reservation":
+                L.marker([xCoordinate,yCoordinate], {icon: icon_reservation, title: name}).bindPopup("<h1>"+name+"</h1><img src = '"+image+"' style='width:256px;height:256px'>").addTo(map);
+                break;
+              case "graveyard":
+                L.marker([xCoordinate,yCoordinate], {icon: icon_graveyard, title: name}).bindPopup("<h1>"+name+"</h1><img src = '"+image+"' style='width:256px;height:256px'>").addTo(map);
+                break;
+              case "campsite":
+                L.marker([xCoordinate,yCoordinate], {icon: icon_campsite, title: name}).bindPopup("<h1>"+name+"</h1><img src = '"+image+"' style='width:256px;height:256px'>").addTo(map);
+                break;
+              case "interest":
+                L.marker([xCoordinate,yCoordinate], {icon: icon_interest, title: name}).bindPopup("<h1>"+name+"</h1><img src = '"+image+"' style='width:256px;height:256px'>").addTo(map);
+                break;
+              default:
+                break;
+            }
           }
         };
 
