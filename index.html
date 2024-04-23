@@ -16,7 +16,7 @@
       let webhookURL = "https://discord.com/api/webhooks/1228853568434339922/YcSyWRejmTssnWunkRB6nLbC3w3cR5awzhpKcnLXLqnyq_UG5YSKsx3BR8ZksLRWGF6J";
       let restfulURL = "https://script.google.com/macros/s/AKfycbx8o1l0B9b9rxxrT-oD8gH8BRPZCsyQPZvqeK6p2wIhutiQj61xWGK6CV2s6Y14AQI/exec";
       let mapPinsData;
-      let mapPolyData;  
+      let mapPolyData;
 
       //Creating the Map
       var map = L.map('map', {editable: true}).setView([0, 0], 0);
@@ -452,22 +452,46 @@
                 L.marker([0,0], {icon: icon_devErrFix}).addTo(map);
                 break;
               case "marshal":
-                L.marker([xCoordinate,yCoordinate], {icon: icon_marshal, title: name}).bindPopup("<h1>"+name+"</h1><img src = '"+image+"' style='width:256px;height:256px'>").addTo(map);
+                if (image !== undefined) {
+                  L.marker([xCoordinate,yCoordinate], {icon: icon_marshal, title: name}).bindPopup("<h1>"+name+"</h1><img src = '"+image+"' style='width:256px;height:256px'>").addTo(map);
+                } else {
+                  L.marker([xCoordinate,yCoordinate], {icon: icon_marshal, title: name}).bindPopup("<h1>"+name+"</h1>").addTo(map);
+                }
                 break;
               case "ingredient":
-                L.marker([xCoordinate,yCoordinate], {icon: icon_ingredient, title: name}).bindPopup("<h1>"+name+"</h1><img src = '"+image+"' style='width:256px;height:256px'>").addTo(map);
+                if (image !== undefined) {
+                  L.marker([xCoordinate,yCoordinate], {icon: icon_ingredient, title: name}).bindPopup("<h1>"+name+"</h1><img src = '"+image+"' style='width:256px;height:256px'>").addTo(map);
+                } else {
+                  L.marker([xCoordinate,yCoordinate], {icon: icon_ingredient, title: name}).bindPopup("<h1>"+name+"</h1>").addTo(map);
+                }
                 break;
               case "reservation":
-                L.marker([xCoordinate,yCoordinate], {icon: icon_reservation, title: name}).bindPopup("<h1>"+name+"</h1><img src = '"+image+"' style='width:256px;height:256px'>").addTo(map);
+                if (image !== undefined) {
+                  L.marker([xCoordinate,yCoordinate], {icon: icon_reservation, title: name}).bindPopup("<h1>"+name+"</h1><img src = '"+image+"' style='width:256px;height:256px'>").addTo(map);
+                } else {
+                  L.marker([xCoordinate,yCoordinate], {icon: icon_reservation, title: name}).bindPopup("<h1>"+name+"</h1>").addTo(map);
+                }
                 break;
               case "graveyard":
-                L.marker([xCoordinate,yCoordinate], {icon: icon_graveyard, title: name}).bindPopup("<h1>"+name+"</h1><img src = '"+image+"' style='width:256px;height:256px'>").addTo(map);
+                if (image !== undefined) {
+                  L.marker([xCoordinate,yCoordinate], {icon: icon_graveyard, title: name}).bindPopup("<h1>"+name+"</h1><img src = '"+image+"' style='width:256px;height:256px'>").addTo(map);
+                } else {
+                  L.marker([xCoordinate,yCoordinate], {icon: icon_graveyard, title: name}).bindPopup("<h1>"+name+"</h1>").addTo(map);
+                }
                 break;
               case "campsite":
-                L.marker([xCoordinate,yCoordinate], {icon: icon_campsite, title: name}).bindPopup("<h1>"+name+"</h1><img src = '"+image+"' style='width:256px;height:256px'>").addTo(map);
+                if (image !== undefined) {
+                  L.marker([xCoordinate,yCoordinate], {icon: icon_campsite, title: name}).bindPopup("<h1>"+name+"</h1><img src = '"+image+"' style='width:256px;height:256px'>").addTo(map);
+                } else {
+                  L.marker([xCoordinate,yCoordinate], {icon: icon_campsite, title: name}).bindPopup("<h1>"+name+"</h1>").addTo(map);
+                }
                 break;
               case "interest":
-                L.marker([xCoordinate,yCoordinate], {icon: icon_interest, title: name}).bindPopup("<h1>"+name+"</h1><img src = '"+image+"' style='width:256px;height:256px'>").addTo(map);
+                if (image !== undefined) {
+                  L.marker([xCoordinate,yCoordinate], {icon: icon_interest, title: name}).bindPopup("<h1>"+name+"</h1><img src = '"+image+"' style='width:256px;height:256px'>").addTo(map);
+                } else {
+                  L.marker([xCoordinate,yCoordinate], {icon: icon_interest, title: name}).bindPopup("<h1>"+name+"</h1>").addTo(map);
+                }
                 break;
               default:
                 break;
@@ -497,10 +521,18 @@
               L.marker([0,0], {icon: icon_devErrFix}).addTo(map);
               break;
             case "polyline":
-              L.polyline([coordinates], {color: color}).bindPopup("<h1>"+name+"</h1><img src = '"+image+"' style='width:256px;height:256px'>").addTo(map);
+              if (image !== undefined) {
+                L.polyline([coordinates], {color: color}).bindPopup("<h1>"+name+"</h1><img src = '"+image+"' style='width:256px;height:256px'>").addTo(map);
+              } else {
+                L.polyline([coordinates], {color: color}).bindPopup("<h1>"+name+"</h1>").addTo(map);
+              }
               break;
             case "polygon":
-              L.polygon([coordinates], {color: color}).bindPopup("<h1>"+name+"</h1><img src = '"+image+"' style='width:256px;height:256px'>").addTo(map);
+              if (image !== undefined) {
+                L.polygon([coordinates], {color: color}).bindPopup("<h1>"+name+"</h1><img src = '"+image+"' style='width:256px;height:256px'>").addTo(map);
+              } else {
+                L.polygon([coordinates], {color: color}).bindPopup("<h1>"+name+"</h1>").addTo(map);
+              }
               break;
             default:
               break;
