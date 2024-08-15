@@ -12,35 +12,42 @@
       font-family: Arial, sans-serif;
     }
     .carousel-container {
-      max-width: 600px;
+      width: 250px; /* Match the width of the images */
+      height: 500px; /* Match the height of the images */
       margin: auto;
       position: relative;
       overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
     .carousel-slide {
       display: none;
     }
     .carousel-slide img {
-      width: 100%;
-      display: block;
+      width: 250px;  /* Fixed width */
+      height: 500px; /* Fixed height */
+      object-fit: cover; /* Ensures image covers the area without distortion */
     }
     .prev, .next {
       cursor: pointer;
       position: absolute;
       top: 50%;
-      width: auto;
       padding: 16px;
       margin-top: -22px;
       color: white;
       font-weight: bold;
       font-size: 18px;
       transition: 0.6s ease;
-      border-radius: 0 3px 3px 0;
       user-select: none;
     }
-    .next {
-      right: 0;
+    .prev {
+      left: 0; /* Align to the left of the container */
       border-radius: 3px 0 0 3px;
+    }
+    .next {
+      right: 0; /* Align to the right of the container */
+      border-radius: 0 3px 3px 0;
     }
     .prev:hover, .next:hover {
       background-color: rgba(0, 0, 0, 0.8);
@@ -66,60 +73,73 @@
 </head>
 <body>
 
-<div class="carousel-container">
-  <div class="carousel-slide">
-    <img src="https://via.placeholder.com/600x300/FF5733/FFFFFF?text=Image+1" alt="Image 1">
+  <div class="carousel-container">
+    <!-- EDIT ME -->
+    <div class="carousel-slide">
+      <img src="https://cymaticentropy.github.io/uniforms/WE/WEMCDT.png">
+    </div>
+    <div class="carousel-slide">
+      <img src="https://cymaticentropy.github.io/uniforms/WE/WEMDPT.png">
+    </div>
+    <div class="carousel-slide">
+      <img src="https://cymaticentropy.github.io/uniforms/WE/WEMSNR.png">
+    </div>
+    <div class="carousel-slide">
+      <img src="https://cymaticentropy.github.io/uniforms/WE/WEMCPT.png">
+    </div>
+    <div class="carousel-slide">
+      <img src="https://cymaticentropy.github.io/uniforms/WE/WEMUND.png">
+    </div>
+    <div class="carousel-slide">
+      <img src="https://cymaticentropy.github.io/uniforms/WE/WEMSHF.png">
+    </div>
+
+    <!-- Next and Previous buttons -->
+    <a class="prev" onclick="changeSlide(-1)">&#10094;</a>
+    <a class="next" onclick="changeSlide(1)">&#10095;</a>
   </div>
-  <div class="carousel-slide">
-    <img src="https://via.placeholder.com/600x300/33FF57/FFFFFF?text=Image+2" alt="Image 2">
+
+  <!-- Dots for navigating the slides -->
+  <div class="dot-container">
+    <span class="dot" onclick="currentSlide(1)"></span>
+    <span class="dot" onclick="currentSlide(2)"></span>
+    <span class="dot" onclick="currentSlide(3)"></span>
+    <span class="dot" onclick="currentSlide(4)"></span>
+    <span class="dot" onclick="currentSlide(5)"></span>
+    <span class="dot" onclick="currentSlide(6)"></span>
   </div>
-  <div class="carousel-slide">
-    <img src="https://via.placeholder.com/600x300/3357FF/FFFFFF?text=Image+3" alt="Image 3">
-  </div>
 
-  <!-- Next and Previous buttons -->
-  <a class="prev" onclick="changeSlide(-1)">&#10094;</a>
-  <a class="next" onclick="changeSlide(1)">&#10095;</a>
-</div>
+  <script>
+    let currentSlideIndex = 0;
+    showSlides(currentSlideIndex);
 
-<!-- Dots for navigating the slides -->
-<div class="dot-container">
-  <span class="dot" onclick="currentSlide(1)"></span>
-  <span class="dot" onclick="currentSlide(2)"></span>
-  <span class="dot" onclick="currentSlide(3)"></span>
-</div>
+    function showSlides(index) {
+      const slides = document.getElementsByClassName("carousel-slide");
+      const dots = document.getElementsByClassName("dot");
 
-<script>
-  let currentSlideIndex = 0;
-  showSlides(currentSlideIndex);
+      if (index >= slides.length) { currentSlideIndex = 0 }
+      if (index < 0) { currentSlideIndex = slides.length - 1 }
 
-  function showSlides(index) {
-    const slides = document.getElementsByClassName("carousel-slide");
-    const dots = document.getElementsByClassName("dot");
+      for (let i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+      }
 
-    if (index >= slides.length) { currentSlideIndex = 0 }
-    if (index < 0) { currentSlideIndex = slides.length - 1 }
+      for (let i = 0; i < dots.length; i++) {
+        dots[i].className = dots[i].className.replace(" active", "");
+      }
 
-    for (let i = 0; i < slides.length; i++) {
-      slides[i].style.display = "none";
+      slides[currentSlideIndex].style.display = "block";
+      dots[currentSlideIndex].className += " active";
     }
 
-    for (let i = 0; i < dots.length; i++) {
-      dots[i].className = dots[i].className.replace(" active", "");
+    function changeSlide(n) {
+      showSlides(currentSlideIndex += n);
     }
 
-    slides[currentSlideIndex].style.display = "block";
-    dots[currentSlideIndex].className += " active";
-  }
-
-  function changeSlide(n) {
-    showSlides(currentSlideIndex += n);
-  }
-
-  function currentSlide(n) {
-    showSlides(currentSlideIndex = n - 1);
-  }
-</script>
+    function currentSlide(n) {
+      showSlides(currentSlideIndex = n - 1);
+    }
+  </script>
 
 </body>
 </html>
