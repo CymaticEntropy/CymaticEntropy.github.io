@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Interactive Selection & Carousel</title>
+  <title>Uniform Carousel</title>
   <style>
     * {
       box-sizing: border-box;
@@ -11,9 +11,11 @@
     body {
       font-family: Arial, sans-serif;
       background-color: #efece5; /* Set background color */
+      margin: 0;
+      padding: 0;
     }
     .carousel-container, .flag-container, .gender-container {
-      max-width: 1000px;
+      max-width: 100%;
       margin: auto;
       display: flex;
       justify-content: center;
@@ -54,17 +56,23 @@
     .prev:hover, .next:hover {
       background-color: rgba(0, 0, 0, 0.8);
     }
-    .flag-container img, .gender-container img {
-      width: auto;
-      height: 300px;
+    .flag-container img {
+      width: 400px; /* Set to preferred size */
+      height: auto;
       margin: 20px;
       transition: transform 0.3s ease;
     }
-    .flag-container img:hover, .gender-container img:hover {
-      transform: scale(1.125); /* Reduced hover size increase */
+    .flag-container img:hover {
+      transform: scale(1.1); /* Reduced hover size increase */
     }
     .gender-container img {
-      transform: scale(0.75); /* 75% size of original */
+      width: 150px; /* 75% of 250px width */
+      height: auto;
+      margin: 20px;
+      transition: transform 0.3s ease;
+    }
+    .gender-container img:hover {
+      transform: scale(1.1); /* Reduced hover size increase */
     }
     .dot-container {
       text-align: center;
