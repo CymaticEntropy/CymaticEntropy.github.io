@@ -3,58 +3,73 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Image Carousel</title>
+  <title>Interactive Selection & Carousel</title>
   <style>
     * {
       box-sizing: border-box;
     }
     body {
       font-family: Arial, sans-serif;
+      background-color: #efece5; /* Set background color */
     }
-    .carousel-container {
-      width: 250px; /* Match the width of the images */
-      height: 500px; /* Match the height of the images */
+    .carousel-container, .flag-container, .gender-container {
+      max-width: 1000px;
       margin: auto;
-      position: relative;
-      overflow: hidden;
       display: flex;
       justify-content: center;
       align-items: center;
+      height: 100vh;
+    }
+    .carousel-container {
+      display: none;
+      width: 250px;
+      height: 500px;
+      position: relative;
+      overflow: hidden;
     }
     .carousel-slide {
       display: none;
     }
     .carousel-slide img {
-      width: 250px;  /* Fixed width */
-      height: 500px; /* Fixed height */
-      object-fit: cover; /* Ensures image covers the area without distortion */
+      width: 250px;
+      height: 500px;
+      object-fit: cover;
     }
     .prev, .next {
       cursor: pointer;
       position: absolute;
       top: 50%;
       padding: 16px;
-      margin-top: -22px;
       color: white;
       font-weight: bold;
       font-size: 18px;
-      transition: 0.6s ease;
       user-select: none;
     }
     .prev {
-      left: 0; /* Align to the left of the container */
-      border-radius: 3px 0 0 3px;
+      left: 0;
     }
     .next {
-      right: 0; /* Align to the right of the container */
-      border-radius: 0 3px 3px 0;
+      right: 0;
     }
     .prev:hover, .next:hover {
       background-color: rgba(0, 0, 0, 0.8);
     }
+    .flag-container img, .gender-container img {
+      width: auto;
+      height: 300px;
+      margin: 20px;
+      transition: transform 0.3s ease;
+    }
+    .flag-container img:hover, .gender-container img:hover {
+      transform: scale(1.125); /* Reduced hover size increase */
+    }
+    .gender-container img {
+      transform: scale(0.75); /* 75% size of original */
+    }
     .dot-container {
       text-align: center;
       margin: 15px 0;
+      display: none;
     }
     .dot {
       cursor: pointer;
@@ -73,8 +88,20 @@
 </head>
 <body>
 
+  <!-- First Selection: Flags -->
+  <div class="flag-container">
+    <img src="emblems/Weathered-WE-Flag.png" alt="WE Flag" onclick="selectFlag('WE')">
+    <img src="emblems/Weathered-NH-Flag.png" alt="NH Flag" onclick="selectFlag('NH')">
+  </div>
+
+  <!-- Second Selection: Genders -->
+  <div class="gender-container" style="display:none;">
+    <img src="emblems/Sex-Male.png" alt="Male" onclick="selectGender('Male')">
+    <img src="emblems/Sex-Female.png" alt="Female" onclick="selectGender('Female')">
+  </div>
+
+  <!-- Carousels -->
   <div class="carousel-container">
-    <!-- EDIT ME -->
     <div class="carousel-slide">
       <img src="outfits/WEMCDT.png">
     </div>
@@ -110,26 +137,62 @@
   </div>
 
   <script>
+    let selectedFlag = '';
+    let selectedGender = '';
     let currentSlideIndex = 0;
-    showSlides(currentSlideIndex);
+
+    function selectFlag(flag) {
+      selectedFlag = flag;
+      document.querySelector('.flag-container').style.display = 'none';
+      document.querySelector('.gender-container').style.display = 'flex';
+    }
+
+    function selectGender(gender) {
+      selectedGender = gender;
+      document.querySelector('.gender-container').style.display = 'none';
+      setupCarousel();
+    }
+
+    function setupCarousel() {
+      let carouselImages = [];
+
+      if (selectedFlag === 'WE' && selectedGender === 'Male') {
+        carouselImages = ['WEMCDT', 'WEMDPT', 'WEMSNR', 'WEMCPT', 'WEMUND', 'WEMSHF'];
+      } else if (selectedFlag === 'WE' && selectedGender === 'Female') {
+        carouselImages = ['WEFCDT', 'WEFDPT', 'WEFSNR', 'WEFCPT', 'WEFUND', 'WEFSHF'];
+      } else if (selectedFlag === 'NH' && selectedGender === 'Male') {
+        carouselImages = ['NHMCDT', 'NHMDPT', 'NHMSNR', 'NHMCPT', 'NHMUND', 'NHMSHF'];
+      } else if (selectedFlag === 'NH' && selectedGender === 'Female') {
+        carouselImages = ['NHFCDT', 'NHFDPT', 'NHFSNR', 'NHFCPT', 'NHFUND', 'NHFSHF'];
+      }
+
+      const slides = document.getElementsByClassName('carousel-slide');
+      for (let i = 0; i < slides.length; i++) {
+        slides[i].getElementsByTagName('img')[0].src = 'outfits/' + carouselImages[i] + '.png';
+      }
+
+      document.querySelector('.carousel-container').style.display = 'block';
+      document.querySelector('.dot-container').style.display = 'block';
+
+      showSlides(currentSlideIndex);
+    }
 
     function showSlides(index) {
-      const slides = document.getElementsByClassName("carousel-slide");
-      const dots = document.getElementsByClassName("dot");
+      const slides = document.getElementsByClassName('carousel-slide');
+      const dots = document.getElementsByClassName('dot');
 
-      if (index >= slides.length) { currentSlideIndex = 0 }
-      if (index < 0) { currentSlideIndex = slides.length - 1 }
+      if (index >= slides.length) { currentSlideIndex = 0; }
+      if (index < 0) { currentSlideIndex = slides.length - 1; }
 
       for (let i = 0; i < slides.length; i++) {
-        slides[i].style.display = "none";
+        slides[i].style.display = 'none';
       }
-
       for (let i = 0; i < dots.length; i++) {
-        dots[i].className = dots[i].className.replace(" active", "");
+        dots[i].className = dots[i].className.replace(' active', '');
       }
 
-      slides[currentSlideIndex].style.display = "block";
-      dots[currentSlideIndex].className += " active";
+      slides[currentSlideIndex].style.display = 'block';
+      dots[currentSlideIndex].className += ' active';
     }
 
     function changeSlide(n) {
