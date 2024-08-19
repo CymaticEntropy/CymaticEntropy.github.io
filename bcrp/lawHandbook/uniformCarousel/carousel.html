@@ -33,11 +33,33 @@
     }
     .carousel-slide {
       display: none;
+      position: relative;
     }
     .carousel-slide img {
       width: 250px;
       height: 500px;
       object-fit: cover;
+    }
+    .popup {
+      position: absolute;
+      display: none;
+      background-color: white;
+      border: 1px solid #ccc;
+      padding: 5px;
+      z-index: 100;
+    }
+    .popup-button {
+      position: absolute;
+      background: #ff2626;
+      border: none;
+      cursor: pointer;
+      width: 50px;
+      height: 50px;
+      opacity: 0;
+    }
+    .popup-button:hover + .popup,
+    .popup-button:focus + .popup {
+      display: block;
     }
     .prev, .next {
       cursor: pointer;
@@ -113,22 +135,22 @@
   <!-- Carousels -->
   <div class="carousel-container">
     <div class="carousel-slide">
-      <img src="outfits/WEMCDT.png">
+      <img src="">
     </div>
     <div class="carousel-slide">
-      <img src="outfits/WEMDPT.png">
+      <img src="">
     </div>
     <div class="carousel-slide">
-      <img src="outfits/WEMSNR.png">
+      <img src="">
     </div>
     <div class="carousel-slide">
-      <img src="outfits/WEMCPT.png">
+      <img src="">
     </div>
     <div class="carousel-slide">
-      <img src="outfits/WEMUND.png">
+      <img src="">
     </div>
     <div class="carousel-slide">
-      <img src="outfits/WEMSHF.png">
+      <img src="">
     </div>
 
     <!-- Next and Previous buttons -->
@@ -168,17 +190,82 @@
 
       if (selectedFlag === 'WE' && selectedGender === 'Male') {
         carouselImages = ['WEMCDT', 'WEMDPT', 'WEMSNR', 'WEMCPT', 'WEMUND', 'WEMSHF'];
+        popupData = [
+          { hat: '1', shirt: '2', necktie: '3', vest: '4', coat: '5', badge: '6', gloves: '7', pants: '8', gunbelt: '9', beltbuckle: '10', boots: '11', bootacc: '12' },
+          { hat: '', shirt: '', necktie: '', vest: '', coat: '', badge: '', gloves: '', pants: '', gunbelt: '', beltbuckle: '', boots: '', bootacc: '' },
+          { hat: '', shirt: '', necktie: '', vest: '', coat: '', badge: '', gloves: '', pants: '', gunbelt: '', beltbuckle: '', boots: '', bootacc: '' },
+          { hat: '', shirt: '', necktie: '', vest: '', coat: '', badge: '', gloves: '', pants: '', gunbelt: '', beltbuckle: '', boots: '', bootacc: '' },
+          { hat: '', shirt: '', necktie: '', vest: '', coat: '', badge: '', gloves: '', pants: '', gunbelt: '', beltbuckle: '', boots: '', bootacc: '' },
+          { hat: '', shirt: '', necktie: '', vest: '', coat: '', badge: '', gloves: '', pants: '', gunbelt: '', beltbuckle: '', boots: '', bootacc: '' }
+        ];
       } else if (selectedFlag === 'WE' && selectedGender === 'Female') {
         carouselImages = ['WEFCDT', 'WEFDPT', 'WEFSNR', 'WEFCPT', 'WEFUND', 'WEFSHF'];
+        popupData = [
+          { hat: '', shirt: '', necktie: '', vest: '', coat: '', badge: '', gloves: '', pants: '', gunbelt: '', beltbuckle: '', boots: '', bootacc: '' },
+          { hat: '', shirt: '', necktie: '', vest: '', coat: '', badge: '', gloves: '', pants: '', gunbelt: '', beltbuckle: '', boots: '', bootacc: '' },
+          { hat: '', shirt: '', necktie: '', vest: '', coat: '', badge: '', gloves: '', pants: '', gunbelt: '', beltbuckle: '', boots: '', bootacc: '' },
+          { hat: '', shirt: '', necktie: '', vest: '', coat: '', badge: '', gloves: '', pants: '', gunbelt: '', beltbuckle: '', boots: '', bootacc: '' },
+          { hat: '', shirt: '', necktie: '', vest: '', coat: '', badge: '', gloves: '', pants: '', gunbelt: '', beltbuckle: '', boots: '', bootacc: '' },
+          { hat: '', shirt: '', necktie: '', vest: '', coat: '', badge: '', gloves: '', pants: '', gunbelt: '', beltbuckle: '', boots: '', bootacc: '' }
+        ];
       } else if (selectedFlag === 'NH' && selectedGender === 'Male') {
         carouselImages = ['NHMCDT', 'NHMDPT', 'NHMSNR', 'NHMCPT', 'NHMUND', 'NHMSHF'];
+        popupData = [
+          { hat: '', shirt: '', necktie: '', vest: '', coat: '', badge: '', gloves: '', pants: '', gunbelt: '', beltbuckle: '', boots: '', bootacc: '' },
+          { hat: '', shirt: '', necktie: '', vest: '', coat: '', badge: '', gloves: '', pants: '', gunbelt: '', beltbuckle: '', boots: '', bootacc: '' },
+          { hat: '', shirt: '', necktie: '', vest: '', coat: '', badge: '', gloves: '', pants: '', gunbelt: '', beltbuckle: '', boots: '', bootacc: '' },
+          { hat: '', shirt: '', necktie: '', vest: '', coat: '', badge: '', gloves: '', pants: '', gunbelt: '', beltbuckle: '', boots: '', bootacc: '' },
+          { hat: '', shirt: '', necktie: '', vest: '', coat: '', badge: '', gloves: '', pants: '', gunbelt: '', beltbuckle: '', boots: '', bootacc: '' },
+          { hat: '', shirt: '', necktie: '', vest: '', coat: '', badge: '', gloves: '', pants: '', gunbelt: '', beltbuckle: '', boots: '', bootacc: '' }
+        ];
       } else if (selectedFlag === 'NH' && selectedGender === 'Female') {
         carouselImages = ['NHFCDT', 'NHFDPT', 'NHFSNR', 'NHFCPT', 'NHFUND', 'NHFSHF'];
+        popupData = [
+          { hat: '', shirt: '', necktie: '', vest: '', coat: '', badge: '', gloves: '', pants: '', gunbelt: '', beltbuckle: '', boots: '', bootacc: '' },
+          { hat: '', shirt: '', necktie: '', vest: '', coat: '', badge: '', gloves: '', pants: '', gunbelt: '', beltbuckle: '', boots: '', bootacc: '' },
+          { hat: '', shirt: '', necktie: '', vest: '', coat: '', badge: '', gloves: '', pants: '', gunbelt: '', beltbuckle: '', boots: '', bootacc: '' },
+          { hat: '', shirt: '', necktie: '', vest: '', coat: '', badge: '', gloves: '', pants: '', gunbelt: '', beltbuckle: '', boots: '', bootacc: '' },
+          { hat: '', shirt: '', necktie: '', vest: '', coat: '', badge: '', gloves: '', pants: '', gunbelt: '', beltbuckle: '', boots: '', bootacc: '' },
+          { hat: '', shirt: '', necktie: '', vest: '', coat: '', badge: '', gloves: '', pants: '', gunbelt: '', beltbuckle: '', boots: '', bootacc: '' }
+        ];
       }
 
       const slides = document.getElementsByClassName('carousel-slide');
+
       for (let i = 0; i < slides.length; i++) {
         slides[i].getElementsByTagName('img')[0].src = 'outfits/' + carouselImages[i] + '.png';
+
+        const hatPopup = slides[i].querySelector('.popup[data-type="hat"]');
+        const shirtPopup = slides[i].querySelector('.popup[data-type="shirt"]');
+        const necktiePopup = slides[i].querySelector('.popup[data-type="necktie"]');
+        const vestPopup = slides[i].querySelector('.popup[data-type="vest"]');
+        const coatPopup = slides[i].querySelector('.popup[data-type="coat"]');
+        const badgePopup = slides[i].querySelector('.popup[data-type="badge"]');
+        const glovesPopup = slides[i].querySelector('.popup[data-type="gloves"]');
+        const pantsPopup = slides[i].querySelector('.popup[data-type="pants"]');
+        const gunbeltPopup = slides[i].querySelector('.popup[data-type="gunbelt"]');
+        const beltbuckePopup = slides[i].querySelector('.popup[data-type="beltbuckle"]');
+        const bootsPopup = slides[i].querySelector('.popup[data-type="boots"]');
+        const bootaccPopup = slides[i].querySelector('.popup[data-type="bootacc"]');
+
+        if (hatPopup && bootsPopup) {
+          hatPopup.textContent = `Hat: ${popupData[i].hat}`;
+          shirtPopup.textContent = `Shirt: ${popupData[i].shirt}`;
+          necktiePopup.textContent = `Necktie: ${popupData[i].necktie}`;
+          vestPopup.textContent = `Vest: ${popupData[i].vest}`;
+          coatPopup.textContent = `Coat: ${popupData[i].coat}`;
+          badgePopup.textContent = `Badge: ${popupData[i].badge}`;
+          glovesPopup.textContent = `Gloves: ${popupData[i].gloves}`;
+          pantsPopup.textContent = `Pants: ${popupData[i].pants}`;
+          gunbeltPopup.textContent = `Gunbelt: ${popupData[i].gunbelt}`;
+          beltbuckePopup.textContent = `Belt Buckle: ${popupData[i].beltbuckle}`;
+          bootsPopup.textContent = `Boots: ${popupData[i].boots}`;
+          bootaccPopup.textContent = `Boot Accessory: ${popupData[i].bootacc}`;
+        }
+
+        // Adjust visibility for first slide
+        //slide.style.display = (i === 0) ? 'block' : 'none';
+
       }
 
       document.querySelector('.carousel-container').style.display = 'block';
