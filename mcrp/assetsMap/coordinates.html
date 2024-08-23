@@ -1,0 +1,169 @@
+
+<html>
+   <head>
+      <title>GTA 5 Interactive Map - Get Location On GTA V Map Using Coordinates!</title>
+      <meta charset="utf-8">
+      <meta name="description" content="GTA 5 Interactive Map - Get Location On GTA V Map Using Coordinates!">
+<meta name="keyword" content="GTA 5 Map, GTA Map, GTA V Interactive Map, Grand Theft Auto 5 Map">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="shortcut icon" type="image/x-icon" href="docs/images/favicon.ico">
+      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="">
+      <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+   <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+        <meta property="og:url"                content="https://gtamap.xyz" />
+        <meta property="og:type"               content="website" />
+        <meta property="og:title"              content="GTA V Interactive Map" />
+        <meta property="og:description"        content="Get Location On GTA V Map Using Coordinates" />
+        <meta property="og:image"              content="https://gtamap.xyz/map.jpeg" />
+        <meta property="og:image:width"        content="1080" />
+        <meta property="og:image:height"       content="600" />
+        <meta property="fb:app_id"             content="1730401003862796"/>
+         <meta name="base-url" content="https://gtamap.xyz">
+         <meta charset="utf-8">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2434317951751122"
+     crossorigin="anonymous"></script>
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-468WTPQTNR"></script>
+
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-468WTPQTNR');
+</script>
+<script>
+    $(document).ready(function(){
+        $("#myModal").modal('show');
+    });
+</script>
+<style>
+      #map { height: 100%;width: 100%; position: absolute }
+.forma{
+	position: absolute;
+	top: 100px;
+	left: 10px;
+	z-index: 99999;
+	background: rgba(0,0,0,0.5);
+	padding: 5px;
+	text-align: center;
+}
+.forma2{
+	position: absolute;
+	top: 100px;
+	right: 10px;
+	z-index: 99999;
+	background: rgba(0,0,0,0.5);
+	padding: 5px;
+	text-align: center;
+	width: 200px;
+	height: 100vh;
+}
+a{
+    text-decoration: none !Important;
+}
+.forma label{
+color: #fff;
+text-shadow: 0 0 5px #000;
+}
+.forma input{
+display: block;
+}
+.btn{
+display: block;
+margin: 10px auto 0 auto;
+padding: 5px 10px;
+text-transform: uppercase;
+}
+   </style>
+   </head>
+   
+   
+   <body style="margin: 0">
+       <div class="forma2"><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2434317951751122"
+     crossorigin="anonymous"></script>
+<!-- Mapa -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2434317951751122"
+     data-ad-slot="8250002797"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script></div>
+
+
+<form action="" method="post" class="forma" id="formular">	
+<label for="xinput">X Position:</label>
+<input type="text" id="xinput" name="xpoz">
+<label for="yinput">Y Position:</label>
+<input type="text" id="yinput" name="ypoz">
+<input type="submit" name="submit" value="Find" class="btn btn-light"><br>
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2434317951751122"
+     crossorigin="anonymous"></script>
+<!-- Mapa 3 -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-2434317951751122"
+     data-ad-slot="9540615925"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</form>
+<div id="myModal" class="modal fade">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Do you need custom UI Scripts?</h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <img src="https://i.imgur.com/WjndiZW.gif" class="img-fluid mb-3">
+                
+                <h5>Check our FIVEM store or contact us on Discord for private projects: <span style="color:#7289da">Kasperzi#2183</span></h5>
+                <div class="d-flex justify-content-between">
+                    <a href="https://kasperzi.tebex.io/category/2001443" target="_blank" class="btn-danger btn">FIVEM STORE</a>
+                    <a href="https://discord.gg/KV8djUS" target="_blank" class="btn" style="background: #7289da !important;color:#fff !important"><i class="fab fa-discord"></i> DISCORD</a>
+                </div>
+                
+                <div class="d-block w-100 p-5">
+                   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2434317951751122"
+     crossorigin="anonymous"></script>
+<!-- Mapa v2 -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:400px;height:90px"
+     data-ad-client="ca-pub-2434317951751122"
+     data-ad-slot="2400492503"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+                </div>
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</form>
+      <div id="map"></div>
+	     <script src="scripts/script.js" ></script>
+            <div id="markerSkripta"></div>
+    
+   </body>
+</html>
+
+
+
+
+<input id="lat">
+<input id="lng">
